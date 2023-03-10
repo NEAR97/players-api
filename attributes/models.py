@@ -11,4 +11,4 @@ class Attribute(models.Model):
     nickname = models.TextField(blank=True)
     height = models.TextField(blank=True)
     weight = models.TextField(blank=True)
-    Njersey = models.TextField(blank=True)
+    jersey = models.TextField(blank=True)
