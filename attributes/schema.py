@@ -66,3 +66,5 @@ class CreateAttribute(graphene.Mutation):
 #4
 class Mutation(graphene.ObjectType):
     create_attribute = CreateAttribute.Field()
+    
+schema = graphene.Schema(query=Query, mutation=Mutation)
