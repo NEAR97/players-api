@@ -26,6 +26,23 @@ ATTRIBUTES_QUERY = '''
    }
  }
 '''
+CREATE_ATTRIBUTE_MUTATION = '''
+ mutation createAttributeMutation($name: String, $country: String, $birth: String, $age: String, $club: String, $position: String, $nickname: String, $height: String, $weight: String, $jersey: String) {
+     createAttribute(name: $name, country: $country, birth: $birth, age: $age, club: $club, position: $position, nickname: $nickname, height: $height, weight: $weight, jersey: $jersey) {
+         name
+         country
+         birth
+         age
+         club
+         position
+         nickname
+         height
+         weight
+         jersey
+     }
+ }
+'''
+
 class AttributeTestCase(GraphQLTestCase):
     GRAPHQL_SCHEMA = schema
     def setUp(self):
@@ -44,3 +61,15 @@ class AttributeTestCase(GraphQLTestCase):
         print (content)
         assert len(content['data']['attributes']) == 2
 
+def test_createAttribute_mutation(self):
+
+        response = self.query(
+            CREATE_ATTRIBUTE_MUTATION,
+            variables={'name': 'messi', 'country': 'google', 'birth': '1978', 'age': '44', 'club': 'America','position': 'keeper', 'nickname': 'perro', 'height':'23','weight':'34', 'jersey':'120'}
+        )
+        print('mutation ')
+        print(response)
+        content = json.loads(response.content)
+        print(content)
+        self.assertResponseNoErrors(response)
+        self.assertDictEqual({"createAttribute" : {"name": "messi"}}, content['data'])
