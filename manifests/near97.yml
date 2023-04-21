@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: near97
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: near97
+  template:
+    metadata:
+      labels:
+        app: near97
+    spec:
+      containers:
+      - image: okteto.dev/near97:latest
+        name: near97
+        envFrom:
+        - configMapRef:
+            name: near97-config
+        livenessProbe:
+          httpGet:
+            path: /ht/
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: near97
+  annotations:
+    dev.okteto.com/auto-ingress: "true"
+spec:
+  type: ClusterIP  
+  ports:
+  - name: "near97"
+    port: 8080
+  selector:
+    app: near97
