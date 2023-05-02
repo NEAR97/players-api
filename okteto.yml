@@ -1,0 +1,12 @@
+build:
+  near97:  # cambiar por su namespace de okteto
+    image: okteto.dev/near97:latest  # cambiar por su namespace de okteto
+
+deploy:
+  - okteto build # build the image with the latest code
+  - kubectl apply -f manifests # create all the resources in kubernetes
+dev:
+  near97:
+    command: bash
+    sync:
+    - .:/players   # cambiar por su proyecto
